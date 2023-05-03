@@ -37,9 +37,10 @@ public final class TestPerformance {
          * Compute the time and print result
          */
         time = System.nanoTime() - time;
+        
+        System.out.println("aaa" + set);
         System.out.println("Converting " + ELEMS
                 + " int to String and inserting them in a Set took " + time
                 + "ns (" + time / TO_MS + "ms)");
-        System.out.println(set);
     }
 }
