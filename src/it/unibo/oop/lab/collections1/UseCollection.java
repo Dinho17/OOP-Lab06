@@ -1,5 +1,6 @@
 package it.unibo.oop.lab.collections1;
 
+import java.util.*;
 /**
  * Example class using {@link java.util.List} and {@link java.util.Map}.
  * 
@@ -14,6 +15,22 @@ public final class UseCollection {
      *            unused
      */
     public static void main(final String... s) {
+    	
+    	final List<Integer> list = new ArrayList<Integer>();
+    	for (int i=1000; i<2000; i++) {
+    		list.add(i);
+    	}
+    	
+    	final List<Integer> list2 = new LinkedList<Integer>();
+    	list2.addAll(list);
+    	
+    	int temp = list.get(0);
+    	list.set(0, list.get(list.size()-1));
+    	list.set(list.size()-1, temp);
+    	
+    	System.out.println(list);
+    	
+    	
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
