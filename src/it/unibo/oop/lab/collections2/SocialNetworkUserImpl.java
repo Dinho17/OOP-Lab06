@@ -76,12 +76,19 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        Collection<U> coll;
+        coll = List.copyOf(this.map.get(groupName));
+        return coll;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+    	List<U> list = new ArrayList<>();
+    	Set<String> set = this.map.keySet();
+    	for (String s : set) {
+    		list.addAll(this.map.get(s));
+    	}
+    	return list;
     }
 
 	@Override
