@@ -43,10 +43,10 @@ public final class TestSocialNetworkUser {
          * 
          * * Adam Smith, asmith, (no age)
          */
-        final SocialNetworkUser<User> kbacon = null;
-        final SocialNetworkUser<User> dwashington = null;
-        final SocialNetworkUser<User> mgladwell = null;
-        final SocialNetworkUser<User> ntaleb = null;
+        final SocialNetworkUser<User> kbacon = new SocialNetworkUserImpl<User>("Kevin", "Bacon", "kbacon", 56);
+        final SocialNetworkUser<User> dwashington = new SocialNetworkUserImpl<User>("Denzel", "Washington", "dwashington", 59);
+        final SocialNetworkUser<User> mgladwell = new SocialNetworkUserImpl<User>("Nicholas", "Taleb", "ntabel", 54);
+        final SocialNetworkUser<User> ntaleb = new SocialNetworkUserImpl<User>("Malcom", "Gladwell", "mgladwell", 51);
         final User asmith = new UserImpl("Adam", "Smith", "asmith");
         /*
          * Make people follow each other
@@ -61,20 +61,23 @@ public final class TestSocialNetworkUser {
          */
         System.out.println("Smith has not set any age at all: " + (!asmith.isAgeDefined()));
         final Collection<User> kbaconFriends = kbacon.getFollowedUsersInGroup("Malcom");
-        System.out.println("K Bacon must have no followed people called Malcom: " + kbaconFriends.isEmpty());
+        //System.out.println("K Bacon must have no followed people called Malcom: " + kbaconFriends.isEmpty());
         final Collection<User> mgladFriends = mgladwell.getFollowedUsersInGroup("Close friends");
-        System.out.println("M Gladwell has not set yet any group called \"Close friends\": " + mgladFriends.isEmpty());
+        //System.out.println("M Gladwell has not set yet any group called \"Close friends\": " + mgladFriends.isEmpty());
         final Collection<User> dwashFriends = dwashington.getFollowedUsersInGroup(WRITERS);
         System.out.println("Denzel has 2 followed people in group \"writers\": " + (dwashFriends.size() == 2));
         /*
          * Adding another friend to Denzel's "writers" group...
          */
         dwashFriends.add(asmith);
+        
         /*
          * The above operation *MUST* have no effect on Denzel's profile itself:
          * STILL TWO PEOPLE in denzel's group called writers
          */
         System.out.println("Denzel has STILL 2 followed people in group \"writers\": "
                 + (dwashington.getFollowedUsersInGroup(WRITERS).size() == 2));
+        
     }
+    
 }

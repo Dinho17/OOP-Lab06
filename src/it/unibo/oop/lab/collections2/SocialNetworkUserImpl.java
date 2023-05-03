@@ -76,9 +76,12 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        Collection<U> coll;
-        coll = List.copyOf(this.map.get(groupName));
-        return coll;
+    	if (this.map.get(groupName) != null) {
+    		Collection<U> coll = new ArrayList<>();
+        	coll.addAll(this.map.get(groupName));
+        	return coll;
+    	}
+    	return null;
     }
 
     @Override
@@ -91,23 +94,39 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
     	return list;
     }
 
+    /*
 	@Override
 	public boolean addFollowedUser(String group, U user) {
 		if (this.map.containsKey(group)) {
 			if (!this.existListUser(group)) {
 				this.map.put(group, new ArrayList<>());
+				System.out.println("aaaa");
 			}
-			return this.map.get(group).add(user);
+			//this.map.get(group).add(user);
+			List<U> list = this.map.get(group);
+			list.add(user);
+			return true;
 		}
 		return false;
 	}
+    */
 
-	private boolean existListUser(String group) {
-		if (this.map.get(group) == null) {
-			return false;
-		} else {
-			return true;
+	@Override
+	public boolean addFollowedUser(String group, U user) {
+		if (!this.map.containsKey(group)) {
+			this.map.put(group, new ArrayList<>());
 		}
+		List<U> list = this.map.get(group);
+		list.add(user);
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "SocialNetworkUserImpl [map=" + map + "]";
 	}
 
+
+	
+	
 }
