@@ -1,7 +1,7 @@
 package it.unibo.oop.lab.collections2;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 
 /**
  * 
@@ -18,6 +18,9 @@ import java.util.List;
  */
 public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
 
+	private Map<String, List<U>> map;
+	
+	
     /*
      * 
      * [FIELDS]
@@ -56,18 +59,20 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        this.map = new HashMap<>();
     }
 
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user, -1);
+        this.map = new HashMap<>();
+    }
     /*
      * [METHODS]
      * 
      * Implements the methods below
      */
 
-    @Override
-    public boolean addFollowedUser(final String circle, final U user) {
-        return false;
-    }
+
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
@@ -78,5 +83,24 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
     public List<U> getFollowedUsers() {
         return null;
     }
+
+	@Override
+	public boolean addFollowedUser(String group, U user) {
+		if (this.map.containsKey(group)) {
+			if (!this.existListUser(group)) {
+				this.map.put(group, new ArrayList<>());
+			}
+			return this.map.get(group).add(user);
+		}
+		return false;
+	}
+
+	private boolean existListUser(String group) {
+		if (this.map.get(group) == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }
