@@ -27,9 +27,38 @@ public final class UseCollection {
     	int temp = list.get(0);
     	list.set(0, list.get(list.size()-1));
     	list.set(list.size()-1, temp);
+
+    	for (int i : list) {
+    		System.out.println(i);
+    	}
     	
-    	System.out.println(list);
+    	long time = System.nanoTime();
+    	for (int i=0; i<100000; i++) {
+    		list.add(i);
+    	}
+    	time = System.nanoTime() - time;
+    	System.out.println("add 100.000 elems in Arraylist, time: " + time);
     	
+    	long time2 = System.nanoTime();
+    	for (int i=0; i<100000; i++) {
+    		list2.add(i);
+    	}
+    	time2 = System.nanoTime() - time2;
+    	System.out.println("add 100.000 elems in Linkedlist, time: " + time2);
+    	
+    	long time3 = System.nanoTime();
+    	for (int i=0; i<1000; i++) {
+    		list.get(list.size()/2);
+    	}
+    	time3 = System.nanoTime() - time3;
+    	System.out.println("read 1000 elems in the middle of Arraylist, time: " + time3);
+    	
+    	long time4 = System.nanoTime();
+    	for (int i=0; i<1000; i++) {
+    		list2.get(list2.size()/2);
+    	}
+    	time4 = System.nanoTime() - time4;
+    	System.out.println("read 1000 elems in the middle of Linkedlist, time: " + time4);
     	
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
