@@ -18,8 +18,9 @@ import java.util.*;
  */
 public final class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
 
-	
-	private Map<String, List<String>> followed;
+
+	private Map<String, List<U>> map;
+
     /*
      * 
      * [FIELDS]
@@ -58,50 +59,48 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
-        this.followed = new HashMap<String, List<String>>();
+        this.map = new HashMap<>();
+
     }
 
     public SocialNetworkUserImpl(final String name, final String surname, final String user) {
         super(name, surname, user, -1);
-        this.followed = new HashMap<String, List<String>>();
+        this.map = new HashMap<>();
     }
     
-    /*
-     * [METHODS]
-     * 
-     * Implements the methods below
-     */
-
-
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+    	if (this.map.get(groupName) != null) {
+    		Collection<U> coll = new ArrayList<>();
+        	coll.addAll(this.map.get(groupName));
+        	return coll;
+    	}
+    	return null;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
-    }
-
-    private boolean existGroups(String username) {
-    	if (this.followed.get(username) == null) {
-    		return false;
-    	} else {
-    		return true;
+    	List<U> list = new ArrayList<>();
+    	Set<String> set = this.map.keySet();
+    	for (String s : set) {
+    		list.addAll(this.map.get(s));
     	}
+    	return list;
     }
 
 	@Override
 	public boolean addFollowedUser(String group, U user) {
-		if (this.followed.containsKey(super.getUsername())) {
-			if (!this.existGroups(super.getUsername())) {
-				this.followed.put(user.getUsername(), new ArrayList<String>());
-			}
-			List<String> list = this.followed.get(super.getUsername());
-			list.add(group);
-			return true;
+		if (!this.map.containsKey(group)) {
+			this.map.put(group, new ArrayList<>());
 		}
-		return false;
+		List<U> list = this.map.get(group);
+		list.add(user);
+		return true;
 	}
-    
+	
+	@Override
+	public String toString() {
+		return "SocialNetworkUserImpl [map=" + map + "]";
+	}
+
 }
